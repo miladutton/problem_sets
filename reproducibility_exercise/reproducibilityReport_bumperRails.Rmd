@@ -72,9 +72,9 @@ d = d %>%
 ### First, check the number of observations for each condition
 ```{r}
 d %>%
-  group_by("FIXME") %>%
+  group_by("DIRECTION") %>%
   summarize(
-    num_obs = "FIXME",
+    num_obs = "202",
     .groups = "keep"
   ) %>%
   ungroup()
@@ -90,8 +90,9 @@ Note on statistics: the goal of this assignment is for you to get used to reprod
 Now fill in the aov command with the proper variables (e.g. replace "VAR1" with the first variable of interest. This is a two-way ANOVA that tests for a main effect of direction (east vs west), a main effect of station, and an interaction between direction and station. The interaction term is denoted by the * below. For more information, do a little Googling about two-way ANOVAs.
 ```{r test1}
 mod <- aov(data = d,
-           formula = DISTANCE ~ "VAR1" + "VAR2" + "VAR1"*"VAR2")
+           formula = DISTANCE ~ DIRECTION + STN_NAME + DIRECTION*STN_NAME)
 anova(mod)
+summary(mod)
 ```
 
 ### Check your results against the instructional team
@@ -105,7 +106,7 @@ Note from instructors: We're unclear as to why the F-values are slightly differe
 ### Effect size
 Get the partial eta-squared (under the `eta.sq.part` column). Do your results match the original paper? Hint: they should!
 ```{r}
-etaSquared("FIXME")
+etaSquared(mod, anova = TRUE)
 ```
 ### Station-specific analyses
 
@@ -116,38 +117,95 @@ etaSquared("FIXME")
 
 # STEP 1: filter the data to get only St. George estimates
 st.george = d %>%
-  "FIXME"
+  filter(STN_NAME == "STG")
 
 # STEP 2: was the estimated distance to St. George greater for eastbound or westbound travellers?
 # no stats needed, just get the mean estimated distance between east and west directions
 # Hint: you'll want group_by() and summarize()
 st.george %>% 
-  "FIXME"
+  group_by("DIRECTION")%>% 
+  summarize(mean_distance = mean(DISTANCE))
+
 
 # STEP 3: Now run an aov on St. George data with distance as the response variable and direction as the explanatory variable
-st.george.aov = aov(data = st.george, formula = "FIXME")
+st.george.aov = aov(DISTANCE ~ DIRECTION, data = st.george)
 summary(st.george.aov)
 
 # STEP 4: Find the eta squared
-"FIXME"
+etaSquared(st.george.aov)
 ```
 
 #### Spadina
 ```{r spadina}
 ## do the same for Spadina
+# STEP 1: filter the data to get only St. George estimates
+spadina = d %>%
+  filter(STN_NAME == "SPAD")
 
+# STEP 2: was the estimated distance to St. George greater for eastbound or westbound travellers?
+# no stats needed, just get the mean estimated distance between east and west directions
+# Hint: you'll want group_by() and summarize()
+spadina %>% 
+  group_by("DIRECTION")%>% 
+  summarize(mean_distance = mean(DISTANCE))
+
+
+# STEP 3: Now run an aov on St. George data with distance as the response variable and direction as the explanatory variable
+spadina.aov = aov(DISTANCE ~ DIRECTION, data = spadina)
+summary(spadina.aov)
+
+# STEP 4: Find the eta squared
+etaSquared(spadina.aov)
 
 ```
 
 #### Bloor-Yonge
 ```{r bloor-yonge}
 ## do the same for Bloor-Yonge
+# STEP 1: filter the data to get only St. George estimates
+bloor = d %>%
+  filter(STN_NAME == "B-Y")
 
+# STEP 2: was the estimated distance to St. George greater for eastbound or westbound travellers?
+# no stats needed, just get the mean estimated distance between east and west directions
+# Hint: you'll want group_by() and summarize()
+bloor %>% 
+  group_by("DIRECTION")%>% 
+  summarize(mean_distance = mean(DISTANCE))
+
+
+# STEP 3: Now run an aov on St. George data with distance as the response variable and direction as the explanatory variable
+bloor.aov = aov(DISTANCE ~ DIRECTION, data = bloor)
+summary(bloor.aov)
+
+# STEP 4: Find the eta squared
+etaSquared(bloor.aov)
 ```
 
 #### Sherbourne
 ```{r sherbourne}
 ## do the same for Sherbourne
+
+# STEP 1: filter the data to get only St. George estimates
+sher = d %>%
+  filter(STN_NAME == "SHER")
+
+# STEP 2: was the estimated distance to St. George greater for eastbound or westbound travellers?
+# no stats needed, just get the mean estimated distance between east and west directions
+# Hint: you'll want group_by() and summarize()
+sher %>% 
+  group_by("DIRECTION")%>% 
+  summarize(mean_distance = mean(DISTANCE))
+
+
+# STEP 3: Now run an aov on St. George data with distance as the response variable and direction as the explanatory variable
+sher.aov = aov(DISTANCE ~ DIRECTION, data = sher)
+summary(sher.aov)
+
+# STEP 4: Find the eta squared
+etaSquared(sher.aov)
+
+
 ```
 
 # Step 5: Reflection
@@ -155,14 +213,17 @@ summary(st.george.aov)
 Were you able to reproduce the results you attempted to reproduce? If not, what part(s) were you unable to reproduce?
 
 > ANSWER HERE
+We were!
 
 How difficult was it to reproduce your results? 
 
 > ANSWER HERE
+Once I got more used to using R syntax it was not very difficult.
 
 What aspects made it difficult? What aspects made it easy?
 
 > ANSWER HERE
+The hardest part for me is just that I am used to using python so it can be a bit confusing switching between R and python.
 
 
 # Bonus: Reproduce Fig 1
