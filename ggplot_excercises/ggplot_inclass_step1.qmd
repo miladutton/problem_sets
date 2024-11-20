@@ -168,7 +168,8 @@ vignette("ggplot2-specs")
 
 Make a scatter plot that shows the relationship between the variables `depth` (on the x-axis), and `table` (on the y-axis). Take a look at the description for the `diamonds` dataset so you know what these different variables mean. Your plot should look like the one shown in Figure \@ref(fig:practice-plot1).
 
-<<<<<<< HEAD
+\<\<\<\<\<\<\< HEAD
+
 ```{r}
 ggplot(data = df.diamonds,
        mapping = aes(x = depth,
@@ -176,7 +177,6 @@ ggplot(data = df.diamonds,
                      color = color)) +
   geom_point()
 =======
-```{r height=6in, width=8in}
 ggplot(data=df.diamonds, aes(x=depth, y=table))+
   geom_point(alpha=.05)
 
