@@ -65,8 +65,8 @@ ggplot(data = df.diamonds,
 ggplot(data = df.diamonds,
        mapping = aes(x = color,
                      y = price)) +
-  stat_summary(fun = "mean",
-               geom = "bar")
+  stat_summary(fun = "mean", #computes the mean
+               geom = "bar") # plots it as a bar graph
 ```
 
 ### Bar plot
@@ -100,7 +100,7 @@ Instead of showing the "mean", we could also show the "median" instead.
 ggplot(data = df.diamonds,
        mapping = aes(x = color,
                      y = price)) +
-  stat_summary(fun = "median",
+  stat_summary(fun = "median", # can vary this function
                geom = "bar")
 ```
 
@@ -111,7 +111,7 @@ ggplot(df.diamonds,
        aes(x = color,
            y = price)) +
   stat_summary(fun = "mean",
-               geom = "point")
+               geom = "point") # this is my favorite way to look at data!
 ```
 
 > **Tip**: Take a look [here](https://ggplot2.tidyverse.org/reference/#section-layer-geoms) to see what other geoms ggplot2 supports.
@@ -123,7 +123,9 @@ Somewhat surprisingly, diamonds with the best color (D) are not the most expensi
 Before moving on, let's set a different default theme for our plots. Personally, I'm not a big fan of the gray background and the white grid lines. Also, the default size of the text should be bigger. We can change the default theme using the `theme_set()` function like so:
 
 ```{r}
-theme_set(theme_classic() + # set the theme
+library(ggthemes)
+
+theme_set(theme_few() + # set the theme
             theme(text = element_text(size = 20))) # set the default text size
 ```
 
@@ -166,12 +168,19 @@ vignette("ggplot2-specs")
 
 Make a scatter plot that shows the relationship between the variables `depth` (on the x-axis), and `table` (on the y-axis). Take a look at the description for the `diamonds` dataset so you know what these different variables mean. Your plot should look like the one shown in Figure \@ref(fig:practice-plot1).
 
+<<<<<<< HEAD
 ```{r}
 ggplot(data = df.diamonds,
        mapping = aes(x = depth,
                      y = table,
                      color = color)) +
   geom_point()
+=======
+```{r height=6in, width=8in}
+ggplot(data=df.diamonds, aes(x=depth, y=table))+
+  geom_point(alpha=.05)
+
+>>>>>>> 1985e1fe38322e07def8dab16b4233afd0e5fe02
 ```
 
 ```{r practice-plot1, fig.align="center", fig.cap="Practice plot 1.", fig.height=6, fig.width=8, out.width="95%"}
@@ -281,6 +290,7 @@ Let's take a look at two more principles for plotting data that are extremely he
 Make a bar plot that shows the average `price` of diamonds (on the y-axis) as a function of their `clarity` (on the x-axis). Also add error bars. Your plot should look like the one shown in Figure \@ref(fig:practice-plot2).
 
 ```{r}
+<<<<<<< HEAD
 ggplot(data = df.diamonds,
        mapping = aes(x = clarity,
                      y = price)) +
@@ -291,6 +301,18 @@ ggplot(data = df.diamonds,
   stat_summary(fun.data = "mean_cl_boot",
                geom = "errorbar",
                width = 0.2)
+=======
+ggplot(data=df.diamonds) +
+  aes(x=clarity, y=price) +
+  stat_summary(fun = "mean",
+               geom = "bar",
+               fill = 'lightblue') +
+  scale_y_continuous(expand = c(0,0)) + # NOT NECESSARY JUST NICE
+  stat_summary(fun.data = "mean_cl_boot",
+               geom = "linerange")
+
+  
+>>>>>>> 1985e1fe38322e07def8dab16b4233afd0e5fe02
 ```
 
 ```{r practice-plot2, out.width="90%", fig.align="center", fig.cap="Practice plot 2.", out.width="95%"}
@@ -332,7 +354,7 @@ ggplot(data = df.diamonds,
                      color = cut)) +
   stat_summary(fun = "mean",
                geom = "line",
-               linewidth = 2)
+               linewidth = 1)
 ```
 
 Nice! In addition to adding color, I've made the lines a little thicker here by setting the `linewidth` argument to 2.
